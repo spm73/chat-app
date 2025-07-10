@@ -1,0 +1,56 @@
+.vscode
+
+chat-backend/Packages
+chat-backend/Package.resolved
+chat-backend/.build
+chat-backend/.vscode
+chat-backend/xcuserdata
+chat-backend/*.xcodeproj
+chat-backend/DerivedData/
+chat-backend/.DS_Store
+chat-backend/db.sqlite
+chat-backend/.swiftpm
+chat-backend/.env
+chat-backend/.env.*
+chat-backend/!.env.example
+
+# Compiled output
+chat-frontend/dist
+chat-frontend/tmp
+chat-frontend/out-tsc
+chat-frontend/bazel-out
+
+# Node
+chat-frontend/node_modules
+chat-frontend/npm-debug.log
+chat-frontend/yarn-error.log
+
+# IDEs and editors
+chat-frontend/.idea/
+chat-frontend/.project
+chat-frontend/.classpath
+chat-frontend/.c9/
+chat-frontend/*.launch
+chat-frontend/.settings/
+chat-frontend/*.sublime-workspace
+
+# Visual Studio Code
+chat-frontend/.vscode/*
+chat-frontend/!.vscode/settings.json
+chat-frontend/!.vscode/tasks.json
+chat-frontend/!.vscode/launch.json
+chat-frontend/!.vscode/extensions.json
+chat-frontend/.history/*
+
+# Miscellaneous
+chat-frontend/.angular/cache
+chat-frontend/.sass-cache/
+chat-frontend/connect.lock
+chat-frontend/coverage
+chat-frontend/libpeerconnection.log
+chat-frontend/testem.log
+chat-frontend/typings
+
+# System files
+chat-frontend/.DS_Store
+chat-frontend/Thumbs.db
