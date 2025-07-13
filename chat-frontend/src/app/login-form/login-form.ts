@@ -14,7 +14,7 @@ export class LoginForm {
   });
 
   onSubmit() {
-    let {usernameBox, psswdBox} = this.loginForm.value;
+    const {usernameBox, psswdBox} = this.loginForm.value;
 
     console.log(`Username entered: ${usernameBox}`);
     console.log(`Password entered: ${psswdBox}`);
