@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'login-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login-form.html',
   styleUrl: './login-form.css'
 })
 export class LoginForm {
   loginForm = new FormGroup({
-    usernameBox: new FormControl(''),
-    psswdBox: new FormControl('')
+    usernameBox: new FormControl('', [Validators.required]),
+    psswdBox: new FormControl('', [Validators.required])
   });
 
   onSubmit() {
