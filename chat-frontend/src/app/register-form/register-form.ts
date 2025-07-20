@@ -17,7 +17,7 @@ export class RegisterForm {
     username: new FormControl('', Validators.required),
     password: new FormControl('', this.passwordValidators),
     confirmPassword: new FormControl('', Validators.required)
-  }, { validators: passwordsDoNotMatchValidator });
+  }, passwordsDoNotMatchValidator);
 
   onSubmit() {
     const { username, password, confirmPassword: _ } = this.registerForm.value;
