@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,13 +10,14 @@ import { RouterLink } from '@angular/router';
 })
 export class RegisterForm {
   registerForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('', [weakPasswordValidator([
-      (psswd) => psswd.length >= 8,
-      (psswd) => contains(psswd, '0123456789'.split('')),
-      (psswd) => contains(psswd, '|@#~"·$%&/()=?¿\\€¡!\''.split('')),
-    ])]),
-    confirmPassword: new FormControl('')
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required].concat(toValidatorFns(
+      [(psswd) => psswd.length >= 8, 'Password must have at least 8 characters'],
+      [(psswd) => psswd.match(/\d/g) != null, 'Password must contain a digit'],
+      [(psswd) => psswd.match(/[A-Z]/g) != null, 'Password must contain a capital letter'],
+      [(psswd) => contains(psswd, '|@#~"·$%&/()=?¿\\€¡!\''.split('')), 'Password must contain a symbol']
+    ))),
+    confirmPassword: new FormControl('', Validators.required)
   }, { validators: passwordsDoNotMatchValidator });
 
   onSubmit() {
@@ -25,20 +26,20 @@ export class RegisterForm {
   }
 }
 
-const passwordsDoNotMatchValidator: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
+const passwordsDoNotMatchValidator: ValidatorFn = control => {
   const psswdBox = control.get('password');
   const confirmPsswdBox = control.get('confirmPassword');
   return psswdBox?.value !== confirmPsswdBox?.value ? { passwordsDoNotMatch: { value: psswdBox?.value }} : null;
 }
 
-function weakPasswordValidator(predicates: ((_ :string) => boolean)[]): ValidatorFn {
-  return (psswdBox: AbstractControl): ValidationErrors | null => {
-    const psswd: string = psswdBox.value;
-    const validation = predicates.every(predicate => predicate(psswd));
-    return validation ? null : { weakPassword: { value: psswd }};
+function toValidatorFn(predicate: (_: string) => boolean, errorMsg: string): ValidatorFn {
+  return control => {
+    return predicate(control.value) ? null : { error: errorMsg };
   }
+}
+
+function toValidatorFns(...validators: [((_: string) => boolean), string][]): ValidatorFn[] {
+  return validators.map(validator => toValidatorFn(validator[0], validator[1]));
 }
 
 function contains(str: string, chars: string[]): boolean {
