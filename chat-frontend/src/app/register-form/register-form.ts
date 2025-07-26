@@ -1,17 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, InjectionToken } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, ValidatorFn, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { PasswordValidators } from './password-validators';
+import { VALIDATORS } from './password-validators';
+
+const PASSWORD_VALIDATORS = new InjectionToken<ValidatorFn[]>('./password-validators VALIDATORS');
 
 @Component({
   selector: 'app-register-form',
   imports: [ReactiveFormsModule, RouterLink],
-  providers: [PasswordValidators],
+  providers: [{provide: PASSWORD_VALIDATORS, useValue: VALIDATORS}],
   templateUrl: './register-form.html',
   styleUrl: './register-form.css'
 })
 export class RegisterForm {
-  passwordValidators = inject(PasswordValidators).validators
+  passwordValidators = inject(PASSWORD_VALIDATORS)
 
   registerForm = new FormGroup({
     username: new FormControl('', Validators.required),

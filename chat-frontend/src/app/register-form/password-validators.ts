@@ -1,17 +1,11 @@
-import { Injectable } from '@angular/core';
 import { ValidatorFn , Validators } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class PasswordValidators {
-  public validators = [Validators.required].concat(toValidatorFns(
-    [(psswd) => psswd.length >= 8, 'Password must have at least 8 characters'],
-    [(psswd) => psswd.match(/\d/g) != null, 'Password must contain a digit'],
-    [(psswd) => psswd.match(/[A-Z]/g) != null, 'Password must contain a capital letter'],
-    [(psswd) => contains(psswd, '|@#~"·$%&/()=?¿\\€¡!\''.split('')), 'Password must contain a symbol']
-  ))
-}
+export const VALIDATORS = [Validators.required].concat(toValidatorFns(
+  [(psswd) => psswd.length >= 8, 'Password must have at least 8 characters'],
+  [(psswd) => psswd.match(/\d/g) != null, 'Password must contain a digit'],
+  [(psswd) => psswd.match(/[A-Z]/g) != null, 'Password must contain a capital letter'],
+  [(psswd) => contains(psswd, '|@#~"·$%&/()=?¿\\€¡!\''.split('')), 'Password must contain a symbol']
+))
 
 function toValidatorFn(predicate: (_: string) => boolean, errorMsg: string): ValidatorFn {
   return control => {
