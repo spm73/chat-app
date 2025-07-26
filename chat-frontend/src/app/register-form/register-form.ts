@@ -13,7 +13,7 @@ const PASSWORD_VALIDATORS = new InjectionToken<ValidatorFn[]>('./password-valida
   styleUrl: './register-form.css'
 })
 export class RegisterForm {
-  passwordValidators = inject(PASSWORD_VALIDATORS)
+  passwordValidators = inject(PASSWORD_VALIDATORS, {self: true})
 
   registerForm = new FormGroup({
     username: new FormControl('', Validators.required),
